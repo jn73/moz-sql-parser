@@ -267,6 +267,17 @@ table_source = (
         ident("name").setName("table alias").setDebugActions(*debug)
     )
     |
+    (
+        ident("value").setName("table name").setDebugActions(*debug) +
+        Literal("::").setDebugActions(*debug).suppress() +
+        expr("udf") +
+        Optional(
+            Optional(AS) +
+            ident("name").setName("table alias").setDebugActions(*debug)
+        )
+        # Literal(")").setDebugActions(*debug).suppress()
+    )
+    |
     ident.setName("table name").setDebugActions(*debug)
 )
 

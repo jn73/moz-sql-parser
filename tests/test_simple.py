@@ -17,6 +17,14 @@ from tests.util import assertRaises
 
 class TestSimple(TestCase):
 
+    def test_table_udf(self):
+        result = parse("SELECT * from ABC::extractSpc(ref, 'spc')")
+        expected = {
+            'select': '*',
+            'from': {'udf': {'extractspc': ['ref', {'literal': 'spc'}]}, 'value': 'ABC'}
+        }
+        self.assertEqual(result, expected)
+
     def test_two_tables(self):
         result = parse("SELECT * from XYZZY, ABC")
         expected = {
